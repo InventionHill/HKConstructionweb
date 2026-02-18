@@ -1,0 +1,1 @@
+export const COMPANY_INFO = "COMPANY_INFO"

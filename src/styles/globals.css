@@ -1,0 +1,137 @@
+@import url('https://fonts.googleapis.com/css2?family=Anybody');
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 200px;
+  background-color: black;
+  color: #fff;
+  border-radius: 6px;
+  padding: 5px;
+  position: absolute;
+  z-index: 1;
+  top: -5px;
+  left: 105%;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+}
+
+@media only screen and (max-width: 767px) {
+  .tooltip .tooltiptext {
+    width: 110px;
+    font-size: 9px;
+    padding: 3px;
+    top: 0;
+    left: 100%;
+  }
+}
+
+.anybody {
+  font-family: 'Anybody', sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+  line-height: '22px';
+  font-weight: '400';
+}
+
+.mobile-input {
+  width: 90px !important;
+}
+
+.data-placeholder:hover::after {
+  content: ' ';
+  box-shadow: 0 0 30px 10px rgb(255, 255, 255);
+  position: absolute;
+  top: 0;
+  left: -3%;
+  height: 100%;
+  animation: load 1s;
+  /* transform: rotate(45deg); */
+}
+
+@keyframes load {
+  0% {
+    left: 0%;
+  }
+
+  100% {
+    left: 100%;
+  }
+}
+
+.swipern {
+  --swiper-navigation-color: #c59648;
+  --swiper-navigation-size: 30px;
+}
+
+::-webkit-scrollbar {
+  background: transparent;
+  width: 0px;
+}
+
+.pageBanner {
+  width: 100%;
+  height: 450px;
+  background-repeat: no-repeat;
+  background-size: 100%;
+}
+
+@keyframes fadeDown {
+  0% {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-down {
+  animation: fadeDown 0.5s ease-out;
+}
+
+/* HTML: <div class="loader"></div> */
+.loader {
+  width: 25px;
+  padding: 10px;
+  margin-left: 10px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: black;
+  --_m: conic-gradient(#0000 10%, #000), linear-gradient(#000 0 0) content-box;
+  -webkit-mask: var(--_m);
+  mask: var(--_m);
+  -webkit-mask-composite: source-out;
+  mask-composite: subtract;
+  animation: l3 1s infinite linear;
+}
+@keyframes l3 {
+  to {
+    transform: rotate(1turn);
+  }
+}
+
+/* Define custom classes for different grid sizes */
+.grid-3 {
+  flex: 0 0 calc(33.33% - 20px);
+}
+
+.grid-4 {
+  flex: 0 0 calc(25% - 20px);
+}
+
+.grid-5 {
+  flex: 0 0 calc(20% - 20px);
+}
+
+.grid-6 {
+  flex: 0 0 calc(16.66% - 20px);
+}

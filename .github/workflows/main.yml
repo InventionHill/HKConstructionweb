@@ -11,50 +11,57 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
+      - name: 📥 Checkout Repository
         uses: actions/checkout@v3
 
-      - name: Deploy to VPS using appleboy/ssh-action
+      - name: 🚀 Deploy to VPS via SSH
         uses: appleboy/ssh-action@v1.2.0
         with:
           host: ${{ secrets.VPS_HOST }}
           username: ${{ secrets.VPS_USER }}
-          password: ${{ secrets.VPS_PASSWORD }}
+          key: ${{ secrets.VPS_SSH_KEY }}
           port: ${{ secrets.VPS_PORT }}
           script: |
-            
-            # Load nvm
+            set -e
+
+            echo "✅ Connected to VPS"
+            whoami
+            node -v || echo "Node not found"
+            yarn -v || echo "Yarn not found"
+
+            # Load NVM if installed
             export NVM_DIR="$HOME/.nvm"
             [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
 
-            # Ensure project directory exists
             PROJECT_DIR="/home/${{ secrets.VPS_USER }}/public_html/HKConstructionweb"
+
             if [ ! -d "$PROJECT_DIR" ]; then
-              echo "Error: Project directory $PROJECT_DIR does not exist!"
+              echo "❌ Project directory does not exist!"
               exit 1
             fi
-            
+
             cd $PROJECT_DIR
-            echo "📦 Cleaning up old lock files..."
-            rm -f package-lock.json
-            
-            # Ensure SSH is used for git pull
+
+            echo "📦 Pulling latest code..."
             git fetch origin main
             git reset --hard origin/main
 
-            echo "🧩 Installing dependencies..."
-            if ! yarn install --frozen-lockfile; then
-              echo "⚠️ Frozen lockfile failed — retrying without it..."
-              yarn install
-            fi
-            
+            echo "🧹 Cleaning old lock files..."
+            rm -f package-lock.json
+
+            echo "📦 Installing dependencies..."
+            yarn install --frozen-lockfile || yarn install
+
+            echo "🏗 Building project..."
             yarn build
 
-            # Restart application
-            pm2 describe hk-web > /dev/null
-            if [ $? -eq 0 ]; then
+            echo "🔄 Restarting PM2..."
+            if pm2 describe hk-web > /dev/null; then
               pm2 restart hk-web
             else
               pm2 start npm --name "hk-web" -- run start
             fi
+
             pm2 save
+
+            echo "🎉 Deployment Successful!"

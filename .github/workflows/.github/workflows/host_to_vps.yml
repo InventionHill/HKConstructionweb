@@ -14,51 +14,20 @@ jobs:
       - name: 📥 Checkout Repository
         uses: actions/checkout@v4
 
-      # Decode Base64 SSH Key
-      - name: 🔐 Decode SSH Private Key
+      # 🔐 Decode Base64 SSH key into a file
+      - name: Decode SSH Key
         run: |
-          echo "${{ secrets.VPS_SSH_KEY_BASE64 }}" | base64 -d > private_key
-          chmod 600 private_key
+          echo "${{ secrets.VPS_SSH_KEY_BASE64 }}" | base64 -d > key.pem
+          chmod 600 key.pem
 
-      # Deploy via SSH
-      - name: 🚀 Deploy to VPS
+      # 🚀 Connect using key file
+      - name: Deploy to VPS
         uses: appleboy/ssh-action@v1.2.0
         with:
           host: ${{ secrets.VPS_HOST }}
           username: ${{ secrets.VPS_USER }}
-          key_path: private_key
+          key_path: key.pem
           port: 22
           script: |
-            set -e
-
             echo "✅ Connected to VPS"
             whoami
-
-            PROJECT_DIR="/home/${{ secrets.VPS_USER }}/public_html/HKConstructionweb"
-
-            if [ ! -d "$PROJECT_DIR" ]; then
-              echo "❌ Project directory does not exist!"
-              exit 1
-            fi
-
-            cd $PROJECT_DIR
-
-            echo "📦 Pulling latest code..."
-            git pull origin main
-
-            echo "📦 Installing dependencies..."
-            yarn install --frozen-lockfile || yarn install
-
-            echo "🏗 Building project..."
-            yarn build
-
-            echo "🔄 Reloading PM2..."
-            if pm2 describe hk-web > /dev/null; then
-              pm2 reload hk-web
-            else
-              pm2 start npm --name "hk-web" -- run start
-            fi
-
-            pm2 save
-
-            echo "🎉 Deployment Successful!"

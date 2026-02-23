@@ -11,23 +11,16 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: 📥 Checkout Repository
+      - name: Checkout
         uses: actions/checkout@v4
 
-      # 🔐 Decode Base64 SSH key into a file
-      - name: Decode SSH Key
-        run: |
-          echo "${{ secrets.VPS_SSH_KEY_BASE64 }}" | base64 -d > key.pem
-          chmod 600 key.pem
-
-      # 🚀 Connect using key file
-      - name: Deploy to VPS
+      - name: Deploy via SSH
         uses: appleboy/ssh-action@v1.2.0
         with:
           host: ${{ secrets.VPS_HOST }}
           username: ${{ secrets.VPS_USER }}
-          key_path: key.pem
+          key: ${{ secrets.VPS_SSH_KEY_BASE64 }}
           port: 22
           script: |
-            echo "✅ Connected to VPS"
+            echo "Connected"
             whoami

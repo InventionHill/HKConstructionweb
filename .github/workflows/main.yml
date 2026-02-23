@@ -12,7 +12,27 @@ jobs:
 
     steps:
       - name: 📥 Checkout Repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
+
+      # 🔎 Debug Secrets (Safe check)
+      - name: 🔍 Debug Secret Presence
+        run: |
+          if [ -z "${{ secrets.VPS_HOST }}" ]; then
+            echo "❌ VPS_HOST is EMPTY"
+            exit 1
+          fi
+
+          if [ -z "${{ secrets.VPS_USER }}" ]; then
+            echo "❌ VPS_USER is EMPTY"
+            exit 1
+          fi
+
+          if [ -z "${{ secrets.VPS_SSH_KEY }}" ]; then
+            echo "❌ VPS_SSH_KEY is EMPTY"
+            exit 1
+          fi
+
+          echo "✅ All required secrets are present"
 
       - name: 🚀 Deploy to VPS via SSH
         uses: appleboy/ssh-action@v1.2.0
@@ -20,21 +40,34 @@ jobs:
           host: ${{ secrets.VPS_HOST }}
           username: ${{ secrets.VPS_USER }}
           key: ${{ secrets.VPS_SSH_KEY }}
-          port: ${{ secrets.VPS_PORT }}
+          port: 22
+          debug: true
           script: |
             set -e
 
+            echo "=================================="
             echo "✅ Connected to VPS"
+            echo "=================================="
+
+            echo "👤 Current User:"
             whoami
+
+            echo "📍 Current Directory:"
+            pwd
+
+            echo "🟢 Node Version:"
             node -v || echo "Node not found"
+
+            echo "🟢 Yarn Version:"
             yarn -v || echo "Yarn not found"
 
-            # Load NVM if installed
+            echo "📦 Loading NVM if exists..."
             export NVM_DIR="$HOME/.nvm"
             [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
 
             PROJECT_DIR="/home/${{ secrets.VPS_USER }}/public_html/HKConstructionweb"
 
+            echo "📂 Checking Project Directory..."
             if [ ! -d "$PROJECT_DIR" ]; then
               echo "❌ Project directory does not exist!"
               exit 1
@@ -43,10 +76,9 @@ jobs:
             cd $PROJECT_DIR
 
             echo "📦 Pulling latest code..."
-            git fetch origin main
-            git reset --hard origin/main
+            git pull origin main
 
-            echo "🧹 Cleaning old lock files..."
+            echo "🧹 Removing old lock file..."
             rm -f package-lock.json
 
             echo "📦 Installing dependencies..."
@@ -57,11 +89,13 @@ jobs:
 
             echo "🔄 Restarting PM2..."
             if pm2 describe hk-web > /dev/null; then
-              pm2 restart hk-web
+              pm2 reload hk-web
             else
               pm2 start npm --name "hk-web" -- run start
             fi
 
             pm2 save
 
+            echo "=================================="
             echo "🎉 Deployment Successful!"
+            echo "=================================="

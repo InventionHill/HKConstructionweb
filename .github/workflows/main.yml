@@ -14,26 +14,6 @@ jobs:
       - name: 📥 Checkout Repository
         uses: actions/checkout@v4
 
-      # 🔎 Debug Secrets (Safe check)
-      - name: 🔍 Debug Secret Presence
-        run: |
-          if [ -z "${{ secrets.VPS_HOST }}" ]; then
-            echo "❌ VPS_HOST is EMPTY"
-            exit 1
-          fi
-
-          if [ -z "${{ secrets.VPS_USER }}" ]; then
-            echo "❌ VPS_USER is EMPTY"
-            exit 1
-          fi
-
-          if [ -z "${{ secrets.VPS_SSH_KEY }}" ]; then
-            echo "❌ VPS_SSH_KEY is EMPTY"
-            exit 1
-          fi
-
-          echo "✅ All required secrets are present"
-
       - name: 🚀 Deploy to VPS via SSH
         uses: appleboy/ssh-action@v1.2.0
         with:
@@ -45,41 +25,39 @@ jobs:
           script: |
             set -e
 
-            echo "=================================="
-            echo "✅ Connected to VPS"
-            echo "=================================="
+            echo "======================================"
+            echo "🚀 Connected to VPS"
+            echo "======================================"
 
-            echo "👤 Current User:"
+            echo "👤 User:"
             whoami
-
-            echo "📍 Current Directory:"
-            pwd
-
-            echo "🟢 Node Version:"
-            node -v || echo "Node not found"
-
-            echo "🟢 Yarn Version:"
-            yarn -v || echo "Yarn not found"
-
-            echo "📦 Loading NVM if exists..."
-            export NVM_DIR="$HOME/.nvm"
-            [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
 
             PROJECT_DIR="/home/${{ secrets.VPS_USER }}/public_html/HKConstructionweb"
 
-            echo "📂 Checking Project Directory..."
             if [ ! -d "$PROJECT_DIR" ]; then
-              echo "❌ Project directory does not exist!"
+              echo "❌ Project directory not found!"
               exit 1
             fi
 
             cd $PROJECT_DIR
 
-            echo "📦 Pulling latest code..."
-            git pull origin main
+            echo "📦 Fetching latest code..."
+            git fetch origin main
 
-            echo "🧹 Removing old lock file..."
-            rm -f package-lock.json
+            echo "🔄 Resetting to origin/main..."
+            git reset --hard origin/main
+
+            echo "📦 Loading NVM..."
+            export NVM_DIR="$HOME/.nvm"
+            if [ -s "$NVM_DIR/nvm.sh" ]; then
+              . "$NVM_DIR/nvm.sh"
+            fi
+
+            echo "🟢 Node Version:"
+            node -v || { echo "❌ Node not found"; exit 1; }
+
+            echo "🟢 Yarn Version:"
+            yarn -v || { echo "❌ Yarn not found"; exit 1; }
 
             echo "📦 Installing dependencies..."
             yarn install --frozen-lockfile || yarn install
@@ -87,7 +65,7 @@ jobs:
             echo "🏗 Building project..."
             yarn build
 
-            echo "🔄 Restarting PM2..."
+            echo "🔄 Reloading PM2..."
             if pm2 describe hk-web > /dev/null; then
               pm2 reload hk-web
             else
@@ -96,6 +74,6 @@ jobs:
 
             pm2 save
 
-            echo "=================================="
-            echo "🎉 Deployment Successful!"
-            echo "=================================="
+            echo "======================================"
+            echo "✅ Deployment Successful!"
+            echo "======================================"

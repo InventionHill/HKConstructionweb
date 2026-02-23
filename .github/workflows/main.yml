@@ -29,7 +29,7 @@ jobs:
             echo "🚀 Connected to VPS"
             echo "======================================"
 
-            echo "👤 User:"
+            echo "👤 Current User:"
             whoami
 
             PROJECT_DIR="/home/${{ secrets.VPS_USER }}/public_html/HKConstructionweb"
@@ -56,14 +56,14 @@ jobs:
             echo "🟢 Node Version:"
             node -v || { echo "❌ Node not found"; exit 1; }
 
-            echo "🟢 Yarn Version:"
-            yarn -v || { echo "❌ Yarn not found"; exit 1; }
+            echo "🟢 NPM Version:"
+            npm -v || { echo "❌ NPM not found"; exit 1; }
 
             echo "📦 Installing dependencies..."
-            yarn install --frozen-lockfile || yarn install
+            npm install
 
             echo "🏗 Building project..."
-            yarn build
+            npm run build
 
             echo "🔄 Reloading PM2..."
             if pm2 describe hk-web > /dev/null; then

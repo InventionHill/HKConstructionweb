@@ -10,23 +10,21 @@ const AboutUs = () => {
   const { data: ourPartner } = useOurPartner()
 
   return (
-    <>
-      <div>
-        <div className="space-y-24">
-          <div className="lg:pageBanner">
-            <BannerOtherPage
-              ImgSrc="images/AboutPage/AboutBanner-min.png"
-              hedging="About Us"
-              PageName="About Us"
-            />
-          </div>
-          <AboutUsSection />
-          <CountersSection Scroll={600} CounterData={counterInfo} />
-          <PartnerLogoSection PartnerLogoData={ourPartner} />
-          <div></div>
+    <div>
+      <div className="space-y-16 lg:space-y-24">
+        <div className="lg:pageBanner">
+          <BannerOtherPage
+            ImgSrc="images/AboutPage/AboutBanner-min.png"
+            hedging="About Us"
+            PageName="About Us"
+          />
         </div>
+        <AboutUsSection />
+        <CountersSection Scroll={600} CounterData={counterInfo} />
+        <PartnerLogoSection PartnerLogoData={ourPartner} />
+        <div></div>
       </div>
-    </>
+    </div>
   )
 }
 

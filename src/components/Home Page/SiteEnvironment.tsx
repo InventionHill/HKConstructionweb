@@ -12,12 +12,12 @@ const SiteEnvironmentSection = () => {
     if (solarplanDataSuccess) {
       setSolarplan(solarplanData?.data?.result)
     }
-  }, [solarplanDataSuccess])
+  }, [solarplanDataSuccess, solarplanData])
 
   const imageUrl = process.env.NEXT_PUBLIC_IMG_ENDPOINT
 
   return (
-    <div className="mx-6 my-24 md:my-12 md:mx-10 lg:mx-16 anybody mb-10 fit-content my-10">
+    <div className="mx-6 md:mx-10 lg:mx-16 xl:mx-24 anybody fit-content">
       <div
         className="grid justify-between h-full grid-cols-1 py-4 md:grid-cols-2"
         key={solarplan?.title}

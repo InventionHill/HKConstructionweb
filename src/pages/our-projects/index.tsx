@@ -23,11 +23,11 @@ const OurProject = () => {
 
   useEffect(() => {
     ourProjects(filter)
-  }, [filter])
+  }, [filter, ourProjects])
 
   return (
     <div>
-      <div className="">
+      <div className="space-y-16 lg:space-y-24">
         <div className="lg:pageBanner">
           <BannerOtherPage
             ImgSrc="images/OurProject/OurProjects-min.png"

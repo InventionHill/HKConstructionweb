@@ -18,33 +18,45 @@ const CountersSection: React.FC<CountersType> = (props) => {
   const setCounterValue = (id: string, max: number) => {
     setCount((prevCounts) => ({ ...prevCounts, [id]: 0 }))
 
-    const step = Math.max(1, Math.floor(max / 100))
-    const interval = setInterval(() => {
-      setCount((prevCounts) => {
-        if (prevCounts[id] + step >= max) {
-          clearInterval(interval)
-          return { ...prevCounts, [id]: max }
-        }
-        return { ...prevCounts, [id]: prevCounts[id] + step }
-      })
-    }, 50)
-  }
+    const duration = 1500 // 1.5 seconds fixed maximum duration
+    const intervalTime = 30 // Update every 30ms
 
-  const handleScroll = () => {
-    if (window.scrollY > (props.Scroll || 0)) {
-      setDivShow(true)
-    } else {
-      setDivShow(false)
-    }
+    // Calculate total steps based on duration and interval
+    const totalSteps = Math.floor(duration / intervalTime)
+
+    // Automatically adjust the increment step based on the target number
+    const stepValue = max / totalSteps
+
+    let currentStep = 0
+
+    const interval = setInterval(() => {
+      currentStep++
+
+      if (currentStep >= totalSteps) {
+        clearInterval(interval)
+        setCount((prevCounts) => ({ ...prevCounts, [id]: max }))
+      } else {
+        // Smoothly and dynamically track the gap step calculation
+        setCount((prevCounts) => ({ ...prevCounts, [id]: Math.round(currentStep * stepValue) }))
+      }
+    }, intervalTime)
   }
 
   useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > (props.Scroll || 0)) {
+        setDivShow(true)
+      } else {
+        setDivShow(false)
+      }
+    }
+
     window.addEventListener('scroll', handleScroll)
 
     return () => {
       window.removeEventListener('scroll', handleScroll)
     }
-  }, [])
+  }, [props.Scroll])
 
   useEffect(() => {
     if (divShow && props.CounterData) {
@@ -69,7 +81,7 @@ const CountersSection: React.FC<CountersType> = (props) => {
   return (
     <div>
       {divShow && (
-        <div className="mx-6 my-8 lg:mx-12 my-10">
+        <div className="mx-6 md:mx-10 lg:mx-16 xl:mx-24">
           <div className="bg-center bg-cover bg-[url('/images/HomePage/counter.png')] grid items-center w-full grid-cols-1 gap-5 px-8 py-10 rounded-lg md:grid-cols-2 lg:grid-cols-4 bg-slate-700">
             {props?.CounterData?.map((item) => (
               <div

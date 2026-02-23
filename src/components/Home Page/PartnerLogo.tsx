@@ -99,14 +99,14 @@ const PartnerLogoSection: React.FC<Props> = ({
 }) => {
   return (
     <div className="anybody">
-      <div className=" md:mx-0 lg:mx-2">
+      <div className="mx-6 md:mx-10 lg:mx-16 xl:mx-24">
         <Carousel
           breakpoints={
             variant === 'list'
               ? breakpointsCircle
               : variant === 'circle'
-              ? breakpointsList
-              : breakpoints
+                ? breakpointsList
+                : breakpoints
           }
           className={``}
           autoplay={false}
@@ -119,7 +119,7 @@ const PartnerLogoSection: React.FC<Props> = ({
           prevActivateId="ProjectPrev"
         >
           <div className="grid grid-cols-5 gap-4 my-10">
-            {PartnerLogoData?.map((item: any, i:any) => (
+            {PartnerLogoData?.map((item: any, i: any) => (
               <SwiperSlide className="" key={i}>
                 <div className="flex ">
                   <div className="w-full max-h-[150px] ">

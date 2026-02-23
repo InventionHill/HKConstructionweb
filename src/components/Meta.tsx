@@ -1,5 +1,4 @@
 import Head from 'next/head';
-import { useRouter } from 'next/router';
 import { NextSeo } from 'next-seo';
 import { AppConfig } from '../../utils/AppConfing';
 
@@ -9,9 +8,7 @@ type IMetaProps = {
 };
 
 const Meta = (props: IMetaProps) => {
-  const router = useRouter();
-
-  const {title, description} = props
+  const { title, description } = props
 
   return (
     <>
@@ -24,12 +21,12 @@ const Meta = (props: IMetaProps) => {
         />
         <title>{title}</title>
         <meta name="description" content={description} />
-        
+
       </Head>
       <NextSeo
         title={props.title}
         description={props.description}
-       
+
         openGraph={{
           title: props.title,
           description: props.description,

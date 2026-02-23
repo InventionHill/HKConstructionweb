@@ -11,11 +11,11 @@ const AboutUsSection = () => {
     if (data !== undefined) {
       updateCompnyInfo(data)
     }
-  }, [data])
+  }, [data, updateCompnyInfo])
 
   return (
     <div>
-      <div className="mx-4 my-10 md:my-16 md:mx-10 lg:mx-12 anybody">
+      <div className="mx-6 md:mx-10 lg:mx-16 xl:mx-24 anybody mb-10">
         <div className="justify-between md:flex bg-cover bg-center bg-[url('/images/HomePage/Section2Bg.png')]">
           <div className="w-full md:w-1/2">
             <div className="space-y-2">
@@ -39,9 +39,9 @@ const AboutUsSection = () => {
               </div>
             </div>
           </div>
-          <div className="w-1/2 mx-auto">
+          <div className="w-1/2 mx-auto flex justify-center">
             <img
-              className="w-full md:h-5/6"
+              className="w-65 md:w-80 h-auto object-contain"
               src={`${process.env.NEXT_PUBLIC_IMG_ENDPOINT}${companyInfo?.owner_image_path}`}
               alt="Owner Image"
             />
@@ -49,7 +49,7 @@ const AboutUsSection = () => {
         </div>
       </div>
 
-      <div className="my-20 anybody">
+      <div className="mx-6 md:mx-10 lg:mx-16 xl:mx-24 anybody">
         <div className="w-full md:flex">
           <div className="md:w-1/2 mx-auto py-10 inset-x-1/2 bg-[#2B2A29] text-center">
             <img

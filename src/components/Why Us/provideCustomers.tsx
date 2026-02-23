@@ -16,7 +16,7 @@ const ProvideCustomersSection = (props: ProvideCustomerType) => {
   const { companyInfo } = useContext(CompanyInfoContext)
 
   return (
-    <div className="h-full mx-4 my-16 space-y-20 md:mx-10 lg:mx-12 anybody">
+    <div className="h-full mx-6 md:mx-10 lg:mx-16 xl:mx-24 space-y-16 lg:space-y-24 anybody">
       <div className="justify-between md:flex bg-center bg-cover bg-[url('/images/whyUsPage/hk-bg.png')]">
         <div className="md:w-1/2">
           <img
@@ -71,57 +71,57 @@ const ProvideCustomersSection = (props: ProvideCustomerType) => {
         </div>
       </div>
 
-      <div className="grid grid-flow-row-dense grid-cols-2 gap-0 lg:grid-cols-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 w-full">
         {bestConstruction?.map((value: any, index: any) => (
-          <div className="min-h-full" key={value.id}>
+          <div className="flex flex-col w-full h-full" key={value.id}>
             {index % 2 === 0 ? (
               <>
-                <div className="px-3 py-6 space-y-2 bg-black md:space-y-6 h-1/2">
-                  <div className="w-10 h-10 p-1.5 rounded-md md:p-3 md:w-16 md:h-16 bg-primaryColor">
+                <div className="flex flex-col justify-start p-8 md:p-10 lg:p-12 xl:p-16 bg-black w-full h-[450px] md:h-[500px] lg:h-[550px] overflow-hidden">
+                  <div className="w-14 h-14 md:w-[60px] md:h-[60px] rounded-md bg-[#C59648] p-3 mb-6 flex items-center justify-center shrink-0">
                     <img
-                      className="inset-0 w-full h-full m-auto"
+                      className="w-full h-full object-contain"
                       src={`${process.env.NEXT_PUBLIC_IMG_ENDPOINT}${value.icon_path}`}
                       alt="Features Icon"
                     />
                   </div>
-                  <div className="text-sm font-medium md:text-xl text-secondaryColor hover:text-primaryColor">
+                  <h3 className="text-xl md:text-2xl lg:text-[26px] font-bold text-[#C59648] mb-4">
                     {value.title}
-                  </div>
-                  <div className="text-xs md:text-base text-secondaryColor">
+                  </h3>
+                  <p className="text-sm md:text-base lg:text-[17px] text-white font-light leading-relaxed opacity-90 filter drop-shadow-sm line-clamp-6 md:line-clamp-none">
                     {value.description}
-                  </div>
+                  </p>
                 </div>
-                <div className="w-full h-1/2">
+                <div className="w-full h-[450px] md:h-[500px] lg:h-[550px]">
                   <img
-                    className="w-full h-full"
-                    src={`${process.env.NEXT_PUBLIC_IMG_ENDPOINT}${value.image_path}`}  
+                    className="w-full h-full object-cover"
+                    src={`${process.env.NEXT_PUBLIC_IMG_ENDPOINT}${value.image_path}`}
                     alt="Features Image"
                   />
                 </div>
               </>
             ) : (
               <>
-                <div className="w-full h-1/2" key={value.id}>
+                <div className="w-full h-[450px] md:h-[500px] lg:h-[550px]">
                   <img
-                    className="w-full h-full"
+                    className="w-full h-full object-cover"
                     src={`${process.env.NEXT_PUBLIC_IMG_ENDPOINT}${value.image_path}`}
                     alt="Features Image"
                   />
                 </div>
-                <div className="px-3 py-6 space-y-2 bg-black md:space-y-6 h-1/2">
-                  <div className="w-10 h-10 p-1.5 rounded-md md:p-3 md:w-16 md:h-16 bg-primaryColor">
+                <div className="flex flex-col justify-start p-8 md:p-10 lg:p-12 xl:p-16 bg-black w-full h-[450px] md:h-[500px] lg:h-[550px] overflow-hidden">
+                  <div className="w-14 h-14 md:w-[60px] md:h-[60px] rounded-md bg-[#C59648] p-3 mb-6 flex items-center justify-center shrink-0">
                     <img
-                      className="inset-0 w-full h-full m-auto"
+                      className="w-full h-full object-contain"
                       src={`${process.env.NEXT_PUBLIC_IMG_ENDPOINT}${value.icon_path}`}
                       alt="Features Icon"
                     />
                   </div>
-                  <div className="text-sm font-medium md:text-xl text-secondaryColor hover:text-primaryColor">
+                  <h3 className="text-xl md:text-2xl lg:text-[26px] font-bold text-[#C59648] mb-4">
                     {value.title}
-                  </div>
-                  <div className="text-xs md:text-base text-secondaryColor">
+                  </h3>
+                  <p className="text-sm md:text-base lg:text-[17px] text-white font-light leading-relaxed opacity-90 filter drop-shadow-sm line-clamp-6 md:line-clamp-none">
                     {value.description}
-                  </div>
+                  </p>
                 </div>
               </>
             )}

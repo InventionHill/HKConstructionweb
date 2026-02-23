@@ -1,5 +1,6 @@
 /* eslint-disable no-console */
 /* eslint-disable @next/next/no-img-element */
+import Link from 'next/link'
 import React, { useContext, useEffect, useState } from 'react'
 import { Disclosure } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
@@ -24,7 +25,7 @@ const NavBar = () => {
     if (data !== undefined) {
       updateCompnyInfo(data)
     }
-  }, [data])
+  }, [data, updateCompnyInfo])
 
   const handelScroll = () => {
     if (window.scrollY > 64) {
@@ -182,17 +183,16 @@ const NavBar = () => {
         <div className="sticky top-0 drop-shadow">
           <Disclosure
             as="nav"
-            className={`${
-              logo === true
-                ? 'bg-black backdrop-blur-md bg-black/60'
-                : 'bg-transparent'
-            }`}
+            className={`${logo === true
+              ? 'bg-black backdrop-blur-md bg-black/60'
+              : 'bg-transparent'
+              }`}
           >
             {({ open }) => (
               <>
                 <div className="w-full px-2 py-1 sm:px-6 lg:px-24">
                   <div className="relative flex items-center justify-between h-16">
-                    <div className="absolute inset-y-0 right-0 flex items-center lg:hidden -mt-16 md:mt-0">
+                    <div className="absolute inset-y-0 right-0 flex items-center xl:hidden">
                       {/* Mobile menu button*/}
                       <Disclosure.Button className="relative inline-flex items-center justify-center p-2 text-gray-400 rounded-md hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
                         <span className="absolute -inset-0.5" />
@@ -211,24 +211,26 @@ const NavBar = () => {
                       </Disclosure.Button>
                     </div>
 
-                    <a className="flex items-center flex-shrink-0" href="\">
-                      {logo === false ? (
-                        <img
-                          className="relative block h-16 -mt-16 md:-mt-16 w-30 md:w-auto md:h-2/4 "
-                          src={`${process.env.NEXT_PUBLIC_IMG_ENDPOINT}${companyInfo?.logo_black_image_path}`}
-                          alt="Your Company"
-                        />
-                      ) : (
-                        <img
-                          className="relative block h-16 w-30 md:w-auto"
-                          src={`${process.env.NEXT_PUBLIC_IMG_ENDPOINT}${companyInfo?.logo_black_image_path}`}
-                          alt="Your Company"
-                        />
-                      )}
-                    </a>
+                    <Link href="/" passHref>
+                      <a className="flex items-center flex-shrink-0">
+                        {logo === false ? (
+                          <img
+                            className="relative block h-12 w-30 md:w-auto"
+                            src={`${process.env.NEXT_PUBLIC_IMG_ENDPOINT}${companyInfo?.logo_black_image_path}`}
+                            alt="Your Company"
+                          />
+                        ) : (
+                          <img
+                            className="relative block h-12 w-30 md:w-auto"
+                            src={`${process.env.NEXT_PUBLIC_IMG_ENDPOINT}${companyInfo?.logo_black_image_path}`}
+                            alt="Your Company"
+                          />
+                        )}
+                      </a>
+                    </Link>
 
                     <div className="flex items-center justify-center mx-auto sm:items-stretch sm:justify-start">
-                      <div className="hidden sm:ml-6 lg:block ">
+                      <div className="hidden sm:ml-6 xl:block ">
                         <div className="flex justify-center mx-auto space-x-4 ">
                           {navigation.map((item: any, i: any) => (
                             <button
@@ -248,7 +250,8 @@ const NavBar = () => {
                         </div>
                       </div>
                     </div>
-                    <div className="absolute inset-y-0 right-0 items-center hidden pr-16 sm:static sm:inset-auto sm:ml-6 lg:pr-2 md:flex">
+
+                    <div className="inset-y-0 right-0 items-center hidden pr-0 sm:static sm:inset-auto sm:ml-6 xl:flex">
                       <button
                         type="button"
                         className="relative hidden p-2 mx-6 text-gray-400 rounded-full md:block bg-secondaryColor hover:text-white hover:bg-primaryColor"
@@ -264,7 +267,7 @@ const NavBar = () => {
                       </button>
 
                       <div className="hidden md:block">
-                        <a href="/contact-us">
+                        <Link href="/contact-us" passHref>
                           <button className="relative inline-flex items-center justify-start px-6 py-2 overflow-hidden transition-all bg-transparent border-2 border-l-8 btn border-primaryColor hover:bg-transparent group">
                             {/* purple box */}
                             <span className="absolute left-0 w-0 h-full transition-all duration-1000 ease-in-out bg-primaryColor group-hover:w-full group-hover:h-full -z-1"></span>
@@ -272,7 +275,7 @@ const NavBar = () => {
                               Get In Touch
                             </span>
                           </button>
-                        </a>
+                        </Link>
                       </div>
                     </div>
                   </div>

@@ -11,8 +11,8 @@ const AboutCompanySection = (props: HomeAboutType) => {
   const { companyInfo } = useContext(CompanyInfoContext)
 
   return (
-    <div className="mx-6 my-24 md:my-12 md:mx-10 lg:mx-16 anybody bg-cover bg-[url('/images/HomePage/Section2Bg.png')] my-10">
-      {props.AboutData?.map((item: any, i:any) => (
+    <div className="mx-6 md:mx-10 lg:mx-16 xl:mx-24 anybody bg-cover bg-[url('/images/HomePage/Section2Bg.png')]">
+      {props.AboutData?.map((item: any, i: any) => (
         <div
           className="grid justify-between h-full grid-cols-1 py-4 md:grid-cols-2"
           key={i}

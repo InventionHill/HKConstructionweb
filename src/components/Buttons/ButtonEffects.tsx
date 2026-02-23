@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import React, { MouseEventHandler } from 'react'
 
 interface Buttons {
@@ -22,7 +23,7 @@ const MainButton = (props: Buttons) => {
       )}
 
       {props.Button2 === true && (
-        <a href="/about-us">
+        <Link href="/about-us" passHref>
           <button
             type="submit"
             onClick={props.onClick}
@@ -34,7 +35,7 @@ const MainButton = (props: Buttons) => {
               {props.ButtonName2}
             </span>
           </button>
-        </a>
+        </Link>
       )}
     </div>
   )

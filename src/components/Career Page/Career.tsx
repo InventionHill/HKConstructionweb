@@ -109,7 +109,7 @@ const CareerSection = () => {
     if (careerSuccess) {
       setCareerList(careerData?.data)
     }
-  }, [careerSuccess])
+  }, [careerSuccess, careerData])
 
   const {
     control,
@@ -159,7 +159,7 @@ const CareerSection = () => {
   }, [careersucess, isError])
 
   return (
-    <div className="flex flex-col md:flex-row justify-center sm:px-6 lg:px-20">
+    <div className="flex flex-col md:flex-row justify-center mx-6 md:mx-10 lg:mx-16 xl:mx-24">
       {/* SIDE SECTION ACCORDION */}
       <div className="w-full md:w-1/2 p-3">
         <div className="text-2xl font-bold mb-6">Open Position</div>

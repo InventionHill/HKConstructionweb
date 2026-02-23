@@ -106,7 +106,7 @@ const ClientConnectionSection: React.FC<Props> = ({
   const { companyInfo } = useContext(CompanyInfoContext)
 
   return (
-    <div className="my-10 anybody">
+    <div className="mx-6 md:mx-10 lg:mx-16 xl:mx-24 anybody">
       {ClientConnection?.map((item: any, i: any) => (
         <div
           key={i}
@@ -138,16 +138,15 @@ const ClientConnectionSection: React.FC<Props> = ({
                 variant === 'list'
                   ? breakpointsCircle
                   : variant === 'circle'
-                  ? breakpointsList
-                  : breakpoints
+                    ? breakpointsList
+                    : breakpoints
               }
               className={``}
               paginationPosition="center"
               prevButtonClasses={`ltr:left-6 rtl:right-6 ltr:md:left-8 rtl:md:right-8 ltr:xl:left-12 rtl:xl:right-12 ltr:2xl:left-24 rtl:2xl:right-24 `}
               nextButtonClasses={`ltr:right-6 rtl:left-6 ltr:md:right-8 rtl:md:left-8 ltr:xl:right-12 rtl:xl:left-12 ltr:2xl:right-24 rtl:2xl:left-24 `}
-              buttonGroupClassName={`${
-                variant === 'circle' ? '-mt-0' : '-mt-0'
-              } bottom-6 md:bottom-0 lg:bottom-0 left-[5%] md:left-[10%] lg:left-[20%]`}
+              buttonGroupClassName={`${variant === 'circle' ? '-mt-0' : '-mt-0'
+                } bottom-6 md:bottom-0 lg:bottom-0 left-[5%] md:left-[10%] lg:left-[20%]`}
               nextActivateId="ClientConnectionNext"
               prevActivateId="ClientConnectionPrev"
             >

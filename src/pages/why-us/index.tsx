@@ -21,7 +21,7 @@ const AboutUs = () => {
 
   return (
     <div>
-      <div className="space-y-24">
+      <div className="space-y-16 lg:space-y-24">
         <div className="lg:pageBanner">
           <BannerOtherPage
             ImgSrc="images/whyUsPage/WhyUsBanner-min.png"

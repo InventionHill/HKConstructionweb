@@ -53,7 +53,7 @@ const GetInTouchSection = (props: GetInTouchType) => {
 
   return (
     <>
-      <div className="mx-4 my-16 md:mx-10 lg:mx-16 anybody">
+      <div className="mx-6 md:mx-10 lg:mx-16 xl:mx-24 anybody">
         {props.GetInTouchData?.map((item: any, i: any) => (
           <div className="space-y-20" key={i}>
             <div className="space-y-4">
@@ -105,7 +105,7 @@ const GetInTouchSection = (props: GetInTouchType) => {
               <div className="border w-full h-full left-12 border-[#6B6868] rounded-md py-8 px-8 space-y-5">
                 <img
                   className="right-0 mx-auto"
-                  src="images/ContactUsPage/ImgIcon7.svg"
+                  src="images/ContactUsPage/imgIcon7.svg"
                   alt="Img Icon 7"
                 />
                 <div className="text-3xl font-semibold text-center text-primaryColor">
@@ -118,7 +118,7 @@ const GetInTouchSection = (props: GetInTouchType) => {
               <div className="border w-full h-full left-12 border-[#6B6868] rounded-md py-8 px-8 space-y-5">
                 <img
                   className="right-0 mx-auto"
-                  src="images/ContactUsPage/ImgIcon8.svg"
+                  src="images/ContactUsPage/imgIcon8.svg"
                   alt="Img Icon 8"
                 />
                 <div className="text-3xl font-semibold text-center text-primaryColor">
@@ -135,7 +135,7 @@ const GetInTouchSection = (props: GetInTouchType) => {
         ))}
       </div>
 
-      <div className="bg-cover bg-center bg-[url('/images/HomePage/img3.png')] py-16 md:px-20">
+      <div className="bg-cover bg-center bg-[url('/images/HomePage/img3.png')] py-16 px-6 md:px-10 lg:px-16 xl:px-24">
         <div className="space-y-12">
           <div className="space-y-4">
             <img
@@ -251,9 +251,13 @@ const GetInTouchSection = (props: GetInTouchType) => {
         </div>
       </div>
 
-      <div className="my-20">
+      <div className="mx-6 md:mx-10 lg:mx-16 xl:mx-24 my-16">
         <iframe
-          src={companyInfo?.map_link}
+          src={
+            companyInfo?.map_link && companyInfo.map_link.includes('http')
+              ? companyInfo.map_link
+              : 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d118106.70010221669!2d70.7314752!3d22.2736308!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3959c98ac71cbd84%3A0xe113f7b23309f830!2sRajkot%2C%20Gujarat!5e0!3m2!1sen!2sin!4v1714460592758!5m2!1sen!2sin'
+          }
           width="100%"
           height="500"
           style={{ border: 0 }}

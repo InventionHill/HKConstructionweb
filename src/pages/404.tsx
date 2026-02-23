@@ -3,7 +3,7 @@
 import { useRouter } from 'next/router'
 import React from 'react'
 
-const notFoundPage = () => {
+const NotFoundPage = () => {
   const route = useRouter()
 
   setTimeout(() => {
@@ -34,4 +34,4 @@ const notFoundPage = () => {
   )
 }
 
-export default notFoundPage
+export default NotFoundPage

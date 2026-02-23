@@ -53,7 +53,7 @@ const HomePage = () => {
 
   useEffect(() => {
     ourProjects(filter)
-  }, [filter])
+  }, [filter, ourProjects])
 
   return (
     <>
@@ -64,7 +64,7 @@ const HomePage = () => {
           <link rel="icon" href="/favicon.ico" />
         </Head>
 
-        <div className="">
+        <div className="space-y-16 lg:space-y-24">
           <Banner BannerData={saveImage} />
           <AboutCompanySection AboutData={aboutHomePage} />
           <SiteEnvironmentSection />
@@ -79,8 +79,6 @@ const HomePage = () => {
           />
           <PartnerLogoSection PartnerLogoData={ourPartner} />
           <PartnersSection />
-
-          <div></div>
         </div>
       </div>
       <CookiesPopup />

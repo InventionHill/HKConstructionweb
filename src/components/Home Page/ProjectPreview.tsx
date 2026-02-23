@@ -127,7 +127,7 @@ const ProjectsPreviewSection: React.FC<Props> = ({
 
   return (
     <>
-      <div className="my-10 anybody">
+      <div className="mx-6 md:mx-10 lg:mx-16 xl:mx-24 anybody">
         <div className="bg-cover bg-[url('/images/HomePage/img3.png')] h-full py-14">
           <div className="space-y-4">
             <img
@@ -143,7 +143,7 @@ const ProjectsPreviewSection: React.FC<Props> = ({
             </div>
           </div>
 
-          <div className="grid md:grid-cols-4 grid-cols-2 gap-4 justify-center mx-6 md:mx-10 lg:mx-96 p-2">
+          <div className="grid md:grid-cols-4 grid-cols-2 gap-4 justify-center mx-6 md:mx-10 mt-5 lg:mx-96 p-2">
             {buttonData.map((button: any) => (
               <button
                 key={button.id}
@@ -152,11 +152,10 @@ const ProjectsPreviewSection: React.FC<Props> = ({
                 className={
                   selectValue === button.id
                     ? `text-white bg-[#C59648] font-bold rounded-md text-base px-3 py-2 text-center`
-                    : `text-black font-bold rounded-md text-base px-3 py-2 text-center ${
-                        filterValue === button.filterValue
-                          ? 'bg-[#C59648]'
-                          : 'bg-transparent border border-[#C59648]'
-                      }`
+                    : `text-black font-bold rounded-md text-base px-3 py-2 text-center ${filterValue === button.filterValue
+                      ? 'bg-[#C59648]'
+                      : 'bg-transparent border border-[#C59648]'
+                    }`
                 }
                 onClick={() => {
                   setSelecteValue(button.id)
@@ -168,22 +167,21 @@ const ProjectsPreviewSection: React.FC<Props> = ({
             ))}
           </div>
 
-          <div className="mx-6 md:mx-10 lg:mx-16">
+          <div className="mx-6 md:mx-10 lg:mx-16 pb-16">
             <Carousel
               breakpoints={
                 variant === 'list'
                   ? breakpointsCircle
                   : variant === 'circle'
-                  ? breakpointsList
-                  : breakpoints
+                    ? breakpointsList
+                    : breakpoints
               }
               className={``}
               paginationPosition="center"
-              prevButtonClasses={`ltr:left-6 rtl:right-6 ltr:md:left-8 rtl:md:right-8 ltr:xl:left-12 rtl:xl:right-12 ltr:2xl:left-24 rtl:2xl:right-24 `}
-              nextButtonClasses={`ltr:right-6 rtl:left-6 ltr:md:right-8 rtl:md:left-8 ltr:xl:right-12 rtl:xl:left-12 ltr:2xl:right-24 rtl:2xl:left-24 `}
-              buttonGroupClassName={`${
-                variant === 'circle' ? '-mt-0' : '-mt-0'
-              } bottom-0 md:bottom-10 lg:bottom-10 left-[35%] md:left-[42%] lg:left-[46%]`}
+              prevButtonClasses={`ltr:left-6 rtl:right-6 ltr:md:left-8 rtl:md:right-8 ltr:xl:left-12 rtl:xl:right-12 ltr:2xl:left-24 rtl:2xl:right-24 [&>img]:brightness-0`}
+              nextButtonClasses={`ltr:right-6 rtl:left-6 ltr:md:right-8 rtl:md:left-8 ltr:xl:right-12 rtl:xl:left-12 ltr:2xl:right-24 rtl:2xl:left-24 [&>img]:brightness-0`}
+              buttonGroupClassName={`${variant === 'circle' ? '-mt-0' : '-mt-0'
+                } -bottom-12 md:-bottom-14 lg:-bottom-16 left-[35%] md:left-[42%] lg:left-[46%]`}
               nextActivateId="ProjectNext"
               prevActivateId="ProjectPrev"
             >
@@ -192,21 +190,20 @@ const ProjectsPreviewSection: React.FC<Props> = ({
                   ProjectsPreviewData.length > 0 &&
                   ProjectsPreviewData.map((item: any, i: any) => (
                     <SwiperSlide key={i}>
-                      <div className="w-full h-full mt-10">
+                      <div className="w-full mt-10">
                         <img
                           src={`${process.env.NEXT_PUBLIC_IMG_ENDPOINT}${item.thumbnail_image_path}`}
                           alt="Project Thumbnail Image"
-                          className="relative w-[100%] h-full before:absolute"
+                          className="relative w-full h-[350px] object-cover rounded-md cursor-pointer transition-transform hover:scale-[1.02]"
                           onClick={() => handleImageClick(item)}
                         />
                       </div>
-                      <div className="mt-5 text-black font-bold text-xl">
+                      <div className="mt-5 text-black font-bold text-xl truncate">
                         {item.name}
                       </div>
                     </SwiperSlide>
                   ))}
               </div>
-              <div className="my-28 space-y-2"></div>
             </Carousel>
           </div>
         </div>

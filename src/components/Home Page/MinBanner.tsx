@@ -1,25 +1,61 @@
 import React, { useRef } from 'react'
-import Slider from 'react-slick'
+import dynamic from 'next/dynamic'
 import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
 import MainButton from '../Buttons/ButtonEffects'
+
+const Slider = dynamic(() => import('react-slick').then((mod) => mod.default as any), {
+  ssr: false,
+}) as any
 
 interface Props {
   variant?: 'default' | 'modern' | 'circle' | 'list'
   BannerData?: any
 }
 
-const Banner: React.FC<Props> = ({ BannerData }) => {
-  const sliderRef = useRef<Slider | null>(null)
+const NextArrow = (props: any) => {
+  const { onClick } = props
+  return (
+    <div
+      className="absolute bottom-12 right-12 md:right-24 z-50 flex items-center justify-center w-10 h-10 md:w-12 md:h-12 border rounded-full cursor-pointer border-secondaryColor text-secondaryColor hover:bg-secondaryColor hover:text-black transition-colors"
+      onClick={onClick}
+    >
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M5 12h14"></path>
+        <path d="m12 5 7 7-7 7"></path>
+      </svg>
+    </div>
+  )
+}
 
-  const settings = {
+const PrevArrow = (props: any) => {
+  const { onClick } = props
+  return (
+    <div
+      className="absolute bottom-12 right-28 md:right-40 z-50 flex items-center justify-center w-10 h-10 md:w-12 md:h-12 border rounded-full cursor-pointer border-secondaryColor text-secondaryColor hover:bg-secondaryColor hover:text-black transition-colors"
+      onClick={onClick}
+    >
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M19 12H5"></path>
+        <path d="m12 19-7-7 7-7"></path>
+      </svg>
+    </div>
+  )
+}
+
+const Banner: React.FC<Props> = ({ BannerData }) => {
+  const sliderRef = useRef<any>(null)
+
+  const settings: any = {
     dots: false,
     infinite: true,
     slidesToShow: 1,
     slidesToScroll: 1,
     autoplay: true,
     autoplaySpeed: 5000,
-    arrows: false,
+    arrows: true,
+    nextArrow: <NextArrow />,
+    prevArrow: <PrevArrow />,
     fade: true,
     cssEase: 'linear',
     pauseOnHover: true,
@@ -27,46 +63,49 @@ const Banner: React.FC<Props> = ({ BannerData }) => {
   }
 
   return (
-    <div className="mx-auto max-w-[1920px]">
+    <div className="mx-auto max-w-[1920px] relative">
       <Slider ref={sliderRef} {...settings}>
         {BannerData?.map((item: any) => (
           <div key={`item--key-${item?.id || ''}`}>
-            <div className="w-full 2xl:h-screen">
-              <div className="absolute w-1/2 mx-12 space-y-1 md:space-y-2 md:mx-16 inset-y-1/4 md:w-2/6 lg:mx-24 md:inset-y-1/2 mt-8 z-50">
-                <div className="text-xs font-normal md:text-xl lg:text-5xl text-secondaryColor">
+            <div className="w-full h-screen relative">
+              <div className="absolute w-11/12 mx-8 md:mx-16 lg:mx-24 top-1/2 -translate-y-1/2 z-40 max-w-4xl">
+                <div className="text-4xl md:text-6xl lg:text-[80px] font-extrabold text-secondaryColor leading-[1.1] tracking-tight whitespace-pre-line mb-6">
                   {item.title}
                 </div>
-                <div className="text-[8px] md:text-xs lg:text-base text-secondaryColor">
+                <div className="text-sm md:text-base lg:text-xl text-secondaryColor font-light tracking-wide mb-10 max-w-2xl">
                   {item.paragraph}
                 </div>
-                <MainButton
-                  ButtonName1={item.button_text}
-                  Button1={true}
-                  onClick={item.button_link}
-                />
+                <div className="mt-4">
+                  <MainButton
+                    ButtonName1={item.button_text || 'DISCOVER PROJECTS'}
+                    Button1={true}
+                    onClick={item.button_link}
+                  />
+                </div>
               </div>
 
               {item?.is_video === 1 ? (
-                <div className="relative ">
+                <div className="relative w-full h-full">
                   <video
                     src={`${process.env.NEXT_PUBLIC_IMG_ENDPOINT}${item.image_path}`}
-                    className=" object-cover w-full h-[200px] md:h-[450px] lg:h-[200px] xl:h-screen"
-                    autoPlay={true}
-                    loop={true}
+                    className="object-cover w-full h-full"
+                    autoPlay
+                    loop
                     muted
-                    onEnded={(e) => {
-                      e.currentTarget.play()
-                    }}
+                    playsInline
                   />
-                  <div className="absolute top-0 left-0 w-full h-full bg-black bg-opacity-75 pointer-events-none"></div>
+                  <div className="absolute inset-0 bg-black bg-opacity-40 pointer-events-none"></div>
                 </div>
               ) : (
-                <img
-                  src={`${process.env.NEXT_PUBLIC_IMG_ENDPOINT}${item.image_path}`}
-                  alt="Banner Image"
-                  className="w-full text-gray-400 h-[200px] md:h-[450px] lg:h-[200px] xl:h-screen bg-no-repeat bg-cover"
-                  aria-hidden="true"
-                />
+                <div className="relative w-full h-full">
+                  <img
+                    src={`${process.env.NEXT_PUBLIC_IMG_ENDPOINT}${item.image_path}`}
+                    alt="Banner Image"
+                    className="w-full h-full object-cover"
+                    aria-hidden="true"
+                  />
+                  <div className="absolute inset-0 bg-black bg-opacity-40 pointer-events-none"></div>
+                </div>
               )}
             </div>
           </div>

@@ -7,6 +7,7 @@ interface Buttons {
   Button1?: boolean
   ButtonName2?: string
   Button2?: boolean
+  isSubmit?: boolean
 }
 
 const MainButton = (props: Buttons) => {
@@ -23,7 +24,7 @@ const MainButton = (props: Buttons) => {
       )}
 
       {props.Button2 === true && (
-        <Link href="/about-us" passHref>
+        props.isSubmit ? (
           <button
             type="submit"
             onClick={props.onClick}
@@ -35,7 +36,21 @@ const MainButton = (props: Buttons) => {
               {props.ButtonName2}
             </span>
           </button>
-        </Link>
+        ) : (
+          <Link href="/about-us" passHref>
+            <button
+              type="button"
+              onClick={props.onClick}
+              className="relative inline-flex items-center justify-start px-6 py-2 overflow-hidden transition-all bg-transparent border-2 border-l-8 anybody btn border-primaryColor hover:bg-transparent group"
+            >
+              {/* purple box */}
+              <span className="absolute left-0 w-0 h-full transition-all duration-1000 ease-in-out bg-primaryColor group-hover:w-full group-hover:h-full -z-1"></span>
+              <span className="z-10 w-full transition duration-1000 ease-in-out md:font-semibold text-primaryColor group-hover:text-secondaryColor">
+                {props.ButtonName2}
+              </span>
+            </button>
+          </Link>
+        )
       )}
     </div>
   )

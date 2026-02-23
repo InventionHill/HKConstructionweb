@@ -245,6 +245,7 @@ const GetInTouchSection = (props: GetInTouchType) => {
                 ButtonName2="Get In Touch"
                 Button2={true}
                 onClick={undefined}
+                isSubmit={true}
               />
             </div>
           </form>

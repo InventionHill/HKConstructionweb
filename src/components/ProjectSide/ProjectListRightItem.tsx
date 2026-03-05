@@ -127,14 +127,14 @@ const ProjectListItemRight: React.FC<ProjectListItemRightProps> = ({
       </div>
     </div>
 
-    <div className="relative col-start-5 col-end-6 mr-7 md:mx-auto">
+    {/* <div className="relative col-start-5 col-end-6 mr-7 md:mx-auto">
       <div className="flex items-center justify-center w-4 h-full">
         <div className="w-1 h-full bg-primaryColor"></div>
       </div>
       <div className="absolute w-14 h-6 rounded-full bg-primaryColor z-10 text-white text-center top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
         {value?.year}
       </div>
-    </div>
+    </div> */}
 
     <div className="hidden md:block relative my-6 text-gray-800 bg-white rounded-xl col-start-6 col-end-10 mr-auto justify-center items-center">
       <div className="col-span-4 w-full h-full">

@@ -18,13 +18,13 @@ const ProjectListItemRight: React.FC<ProjectListItemRightProps> = ({
             <img
               src={`${process.env.NEXT_PUBLIC_IMG_ENDPOINT}${value.thumbnail_image_path}`}
               alt="Project List Image"
-              className="relative w-[100%] h-full before:absolute "
+              className="relative w-[400px] h-[283px] before:absolute"
               onClick={() => handleImageClick(value)}
             />
           </div>
         </div>
 
-        <div className="space-y-1">
+        <div className="space-y-1 max-w-[400px]">
           <div className="flex items-center my-auto text-sm">
             <img
               className="mr-3"

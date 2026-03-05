@@ -116,18 +116,19 @@ const ProjectListItemLeft: React.FC<ProjectListItemLeftProps> = ({
 
     <div className="relative my-6 text-gray-800 bg-white rounded-xl col-start-6 col-end-10 mr-auto md:flex md:justify-center md:items-center">
       <div className="w-full mx-auto sm:px-6 lg:px-16">
+
         <div className="skeleton">
           <div className="relative flex-none w-full mb-10 before:rounded hover:before:border-transparent before:border before:absolute before:top-4 before:left-4 before:w-full before:h-full hover:before:bg-primaryColor data-placeholder">
             <img
               src={`${process.env.NEXT_PUBLIC_IMG_ENDPOINT}${value.thumbnail_image_path}`}
               alt="Project Thumbnail Image"
-              className="relative w-[100%] h-full before:absolute "
+              className="relative w-[400px] h-[283px] before:absolute "
               onClick={() => handleImageClick(value)}
             />
           </div>
         </div>
 
-        <div className="space-y-1">
+        <div className="space-y-1 max-w-[400px]">
           <div className="flex items-center my-auto text-sm">
             <img
               className="mr-3"
